@@ -120,6 +120,30 @@
 				"header": []
 			},
 			"response": []
+		},
+		{
+			"name": "Get_Car_By_Make",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/cars/hyundai",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"cars",
+						"hyundai"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
