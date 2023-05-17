@@ -9,7 +9,12 @@ from .models import Car
 def cars_list(request):
     
     if request.method == 'GET':
+        dealership_name = request.query_params.get('dealership')
+        print(dealership_name)
         cars = Car.objects.all()
+        
+        if dealership_name:
+            cars = cars.filter(dealership__name=dealership_name)
         serializer = CarSerializer(cars, many=True)
         return Response(serializer.data)
     
