@@ -10,11 +10,16 @@ def cars_list(request):
     
     if request.method == 'GET':
         dealership_name = request.query_params.get('dealership')
+        sort_param = request.query_params.get('sort')
         print(dealership_name)
         cars = Car.objects.all()
         
         if dealership_name:
             cars = cars.filter(dealership__name=dealership_name)
+        
+        if sort_param:
+            cars = cars.order_by(sort_param)
+            
         serializer = CarSerializer(cars, many=True)
         return Response(serializer.data)
     
