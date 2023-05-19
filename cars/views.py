@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import CarSerializer
 from .models import Car
+from dealerships.models import Dealerships
 
 @api_view(['GET', 'POST'])
 def cars_list(request):
@@ -61,3 +62,23 @@ def cars_by_make(request, make):
     else:
         return Response("No cars of that make in the database!", status=status.HTTP_404_NOT_FOUND)
     
+@api_view(['GET'])
+def dealership_list(request):
+    
+    appending_dict_example = {}
+    appending_dict_example['name'] = 'David'
+    print(appending_dict_example) # {'name': 'David'}
+    
+    dearlerships = Dealerships.objects.all()
+    
+    custom_response_dictionary = {}
+    
+    for dealership in dearlerships:
+        cars = Car.objects.filter(dealership_id=dealership.id)
+        car_serializer = CarSerializer(cars, many=True)
+        
+        custom_response_dictionary[dealership.name] = {
+            "address": dealership.address,
+            "cars": car_serializer.data
+        }
+    return Response(custom_response_dictionary)
